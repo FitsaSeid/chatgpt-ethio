@@ -12,26 +12,19 @@
 
   <!-- Main CSS file -->
   <link rel="stylesheet" href="css/style.css">
-
-
+  <script href="./js/ds-masnoo.js"></script>
 </head>
 
 <body>
-
-  <!-- PRELOADER -->
   <div class="ds-preloader"></div>
-  <!-- /PRELOADER -->
 
   <!-- HEADER -->
   <header>
 
-    <!-- HEADER OVERLAY -->
     <div class="ds-overlay ds-overlay-color"></div>
-    <!-- /HEADER OVERLAY -->
 
     <div class="container">
 
-      <!-- LOGO & SOCIALS -->
       <div class="row">
         <!-- LOGO -->
         <div class="col-sm-4 ds-logo">
@@ -47,7 +40,6 @@
         </div>
         <!-- /TEXT + BUTTON -->
       </div>
-      <!-- /LOGO & SOCIALS -->
 
       <!-- TITLE -->
       <div class="row">
@@ -100,26 +92,39 @@
   </div>
   <!-- /FOOTER -->
 
-  <!-- jQuery -->
-  <script src="./js/jquery-1.11.0.min.js"></script>
-  <!-- Backstretch -->
-  <script src="./js/jquery.backstretch.min.js"></script>
-  <!-- slick -->
-  <script src="./js/slick.min.js"></script>
-  <!-- Featherlight -->
-  <script src="./js/featherlight.min.js"></script>
-  <!-- WordsRotator -->
-  <!-- <script src="js/jquery.wordrotator.min.js"></script> -->
-  <!-- Countdown -->
-  <!-- <script src="js/jquery.countdown.js"></script> -->
-  <!-- Smooth Scroll -->
-  <!-- <script src="js/smoothscroll.js"></script> -->
-  <!-- Ajax mailchimp -->
-  <!-- <script src="js/jquery.ajaxchimp.js"></script> -->
-  <!-- WOW.js -->
-  <!-- <script src="js/wow.min.js"></script> -->
-  <!-- Masnoo js scripts -->
-  <script src="./js/ds-masnoo.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+  <script>
+
+    (function ($) {
+      "use strict";
+      $(document).ready(function () {
+        'use strict';
+        $("header").backstretch("img/bg.jpg");
+        $(".photo").backstretch("img/bg-2.jpg");
+        $(".photo-centered").backstretch("img/bg-3.jpg");
+      });
+      $(window).load(function () {
+        $(".ds-preloader").delay(100).fadeOut(500);
+      });
+    })(jQuery);
+
+    /**
+ * Featherlight - ultra slim jQuery lightbox
+ * Version 1.0.4 - http://noelboss.github.io/featherlight/
+ *
+ * Copyright 2015, Noël Raoul Bossart (http://www.noelboss.com)
+ * MIT Licensed.
+**/
+    !function (a) { "use strict"; function b(a, c) { if (!(this instanceof b)) { var d = new b(a, c); return d.open(), d } this.id = b.id++, this.setup(a, c), this.chainCallbacks(b._callbackChain) } if ("undefined" == typeof a) return void ("console" in window && window.console.info("Too much lightness, Featherlight needs jQuery.")); var c = function (a) { if (!a.isDefaultPrevented()) { var c = b.current(); c && c.onKeyDown(a) } }; b.prototype = { constructor: b, namespace: "featherlight", targetAttr: "data-featherlight", variant: null, resetCss: !1, background: null, openTrigger: "click", closeTrigger: "click", filter: null, root: "body", openSpeed: 250, closeSpeed: 250, closeOnClick: "background", closeOnEsc: !0, closeIcon: "&#10005;", otherClose: null, beforeOpen: a.noop, beforeContent: a.noop, beforeClose: a.noop, afterOpen: a.noop, afterContent: a.noop, afterClose: a.noop, onKeyDown: a.noop, type: null, contentFilters: ["jquery", "image", "html", "ajax", "text"], setup: function (b, c) { "object" != typeof b || b instanceof a != !1 || c || (c = b, b = void 0); var d = a.extend(this, c, { target: b }), e = d.resetCss ? d.namespace + "-reset" : d.namespace, f = a(d.background || ['<div class="' + e + '">', '<div class="' + e + '-content">', '<span class="' + e + "-close-icon " + d.namespace + '-close">', d.closeIcon, "</span>", '<div class="' + d.namespace + '-inner"></div>', "</div>", "</div>"].join("")), g = "." + d.namespace + "-close" + (d.otherClose ? "," + d.otherClose : ""); return d.$instance = f.clone().addClass(d.variant), d.$instance.on(d.closeTrigger + "." + d.namespace, function (b) { var c = a(b.target); ("background" === d.closeOnClick && c.is("." + d.namespace) || "anywhere" === d.closeOnClick || c.closest(g).length) && (b.preventDefault(), d.close()) }), this }, getContent: function () { var b = this, c = this.constructor.contentFilters, d = function (a) { return b.$currentTarget && b.$currentTarget.attr(a) }, e = d(b.targetAttr), f = b.target || e || "", g = c[b.type]; if (!g && f in c && (g = c[f], f = b.target && e), f = f || d("href") || "", !g) for (var h in c) b[h] && (g = c[h], f = b[h]); if (!g) { var i = f; if (f = null, a.each(b.contentFilters, function () { return g = c[this], g.test && (f = g.test(i)), !f && g.regex && i.match && i.match(g.regex) && (f = i), !f }), !f) return "console" in window && window.console.error("Featherlight: no content filter found " + (i ? ' for "' + i + '"' : " (no target specified)")), !1 } return g.process.call(b, f) }, setContent: function (b) { var c = this; return (b.is("iframe") || a("iframe", b).length > 0) && c.$instance.addClass(c.namespace + "-iframe"), c.$content = b.addClass(c.namespace + "-inner"), c.$instance.find("." + c.namespace + "-inner").slice(1).remove().end().replaceWith(c.$content), c }, open: function (d) { var e = this; if (!(d && d.isDefaultPrevented() || e.beforeOpen(d) === !1)) { d && d.preventDefault(); var f = e.getContent(); if (f) return e.constructor._opened.add(e._openedCallback = function (a, b) { e instanceof a && e.$instance.closest("body").length > 0 && (b.currentFeatherlight = e) }), b._keyHandlerInstalled || (a(document).on("keyup." + b.prototype.namespace, c), b._keyHandlerInstalled = !0), e.$instance.appendTo(e.root).fadeIn(e.openSpeed), e.beforeContent(d), a.when(f).done(function (b) { e.setContent(b), e.afterContent(d), a.when(e.$instance.promise()).done(function () { e.afterOpen(d) }) }), e } return !1 }, close: function (d) { var e = this; return e.beforeClose(d) === !1 ? !1 : (e.constructor._opened.remove(e._openedCallback), b.current() || (a(document).off("keyup." + b.namespace, c), e.constructor._keyHandlerInstalled = !1), void e.$instance.fadeOut(e.closeSpeed, function () { e.$instance.detach(), e.afterClose(d) })) }, chainCallbacks: function (b) { for (var c in b) this[c] = a.proxy(b[c], this, a.proxy(this[c], this)) } }, a.extend(b, { id: 0, autoBind: "[data-featherlight]", defaults: b.prototype, contentFilters: { jquery: { regex: /^[#.]\w/, test: function (b) { return b instanceof a && b }, process: function (b) { return a(b).clone(!0) } }, image: { regex: /\.(png|jpg|jpeg|gif|tiff|bmp)(\?\S*)?$/i, process: function (b) { var c = this, d = a.Deferred(), e = new Image; return e.onload = function () { d.resolve(a('<img src="' + b + '" alt="" class="' + c.namespace + '-image" />')) }, e.onerror = function () { d.reject() }, e.src = b, d.promise() } }, html: { regex: /^\s*<[\w!][^<]*>/, process: function (b) { return a(b) } }, ajax: { regex: /./, process: function (b) { var c = a.Deferred(), d = a("<div></div>").load(b, function (a, b) { "error" !== b && c.resolve(d.contents()), c.fail() }); return c.promise() } }, text: { process: function (b) { return a("<div>", { text: b }) } } }, functionAttributes: ["beforeOpen", "afterOpen", "beforeContent", "afterContent", "beforeClose", "afterClose"], readElementConfig: function (b) { var c = this, d = {}; return b && b.attributes && a.each(b.attributes, function () { var b = this.name.match(/^data-featherlight-(.*)/); if (b) { var e = this.value, f = a.camelCase(b[1]); if (a.inArray(f, c.functionAttributes) >= 0) e = new Function(e); else try { e = a.parseJSON(e) } catch (g) { } d[f] = e } }), d }, extend: function (b, c) { var d = function () { this.constructor = b }; return d.prototype = this.prototype, b.prototype = new d, b.__super__ = this.prototype, a.extend(b, this, c), b.defaults = b.prototype, b }, attach: function (b, c, d) { var e = this; "object" != typeof c || c instanceof a != !1 || d || (d = c, c = void 0), d = a.extend({}, d); var f = a.extend({}, e.defaults, e.readElementConfig(b[0]), d); return b.on(f.openTrigger + "." + f.namespace, f.filter, function (f) { var g = a.extend({ $source: b, $currentTarget: a(this) }, e.readElementConfig(b[0]), e.readElementConfig(this), d); new e(c, g).open(f) }), b }, current: function () { var a = {}; return this._opened.fire(this, a), a.currentFeatherlight }, close: function () { var a = this.current(); a && a.close() }, _onReady: function () { var b = this; b.autoBind && (b.attach(a(document), { filter: b.autoBind }), a(b.autoBind).filter("[data-featherlight-filter]").each(function () { b.attach(a(this)) })) }, _callbackChain: { onKeyDown: function (a, b) { return 27 === b.keyCode && this.closeOnEsc ? (this.$instance.find("." + this.namespace + "-close:first").click(), void b.preventDefault()) : (console.log("pass"), a(b)) } }, _opened: a.Callbacks() }), a.featherlight = b, a.fn.featherlight = function (a, c) { return b.attach(this, a, c) }, a(document).ready(function () { b._onReady() }) }(jQuery);
+
+
+
+    /*! Backstretch - v2.0.4 - 2013-06-19
+* http://srobbin.com/jquery-plugins/backstretch/
+* Copyright (c) 2013 Scott Robbin; Licensed MIT */
+    (function (a, d, p) { a.fn.backstretch = function (c, b) { (c === p || 0 === c.length) && a.error("No images were supplied for Backstretch"); 0 === a(d).scrollTop() && d.scrollTo(0, 0); return this.each(function () { var d = a(this), g = d.data("backstretch"); if (g) { if ("string" == typeof c && "function" == typeof g[c]) { g[c](b); return } b = a.extend(g.options, b); g.destroy(!0) } g = new q(this, c, b); d.data("backstretch", g) }) }; a.backstretch = function (c, b) { return a("body").backstretch(c, b).data("backstretch") }; a.expr[":"].backstretch = function (c) { return a(c).data("backstretch") !== p }; a.fn.backstretch.defaults = { centeredX: !0, centeredY: !0, duration: 5E3, fade: 0 }; var r = { left: 0, top: 0, overflow: "hidden", margin: 0, padding: 0, height: "100%", width: "100%", zIndex: -999999 }, s = { position: "absolute", display: "none", margin: 0, padding: 0, border: "none", width: "auto", height: "auto", maxHeight: "none", maxWidth: "none", zIndex: -999999 }, q = function (c, b, e) { this.options = a.extend({}, a.fn.backstretch.defaults, e || {}); this.images = a.isArray(b) ? b : [b]; a.each(this.images, function () { a("<img />")[0].src = this }); this.isBody = c === document.body; this.$container = a(c); this.$root = this.isBody ? l ? a(d) : a(document) : this.$container; c = this.$container.children(".backstretch").first(); this.$wrap = c.length ? c : a('<div class="backstretch"></div>').css(r).appendTo(this.$container); this.isBody || (c = this.$container.css("position"), b = this.$container.css("zIndex"), this.$container.css({ position: "static" === c ? "relative" : c, zIndex: "auto" === b ? 0 : b, background: "none" }), this.$wrap.css({ zIndex: -999998 })); this.$wrap.css({ position: this.isBody && l ? "fixed" : "absolute" }); this.index = 0; this.show(this.index); a(d).on("resize.backstretch", a.proxy(this.resize, this)).on("orientationchange.backstretch", a.proxy(function () { this.isBody && 0 === d.pageYOffset && (d.scrollTo(0, 1), this.resize()) }, this)) }; q.prototype = { resize: function () { try { var a = { left: 0, top: 0 }, b = this.isBody ? this.$root.width() : this.$root.innerWidth(), e = b, g = this.isBody ? d.innerHeight ? d.innerHeight : this.$root.height() : this.$root.innerHeight(), j = e / this.$img.data("ratio"), f; j >= g ? (f = (j - g) / 2, this.options.centeredY && (a.top = "-" + f + "px")) : (j = g, e = j * this.$img.data("ratio"), f = (e - b) / 2, this.options.centeredX && (a.left = "-" + f + "px")); this.$wrap.css({ width: b, height: g }).find("img:not(.deleteable)").css({ width: e, height: j }).css(a) } catch (h) { } return this }, show: function (c) { if (!(Math.abs(c) > this.images.length - 1)) { var b = this, e = b.$wrap.find("img").addClass("deleteable"), d = { relatedTarget: b.$container[0] }; b.$container.trigger(a.Event("backstretch.before", d), [b, c]); this.index = c; clearInterval(b.interval); b.$img = a("<img />").css(s).bind("load", function (f) { var h = this.width || a(f.target).width(); f = this.height || a(f.target).height(); a(this).data("ratio", h / f); a(this).fadeIn(b.options.speed || b.options.fade, function () { e.remove(); b.paused || b.cycle(); a(["after", "show"]).each(function () { b.$container.trigger(a.Event("backstretch." + this, d), [b, c]) }) }); b.resize() }).appendTo(b.$wrap); b.$img.attr("src", b.images[c]); return b } }, next: function () { return this.show(this.index < this.images.length - 1 ? this.index + 1 : 0) }, prev: function () { return this.show(0 === this.index ? this.images.length - 1 : this.index - 1) }, pause: function () { this.paused = !0; return this }, resume: function () { this.paused = !1; this.next(); return this }, cycle: function () { 1 < this.images.length && (clearInterval(this.interval), this.interval = setInterval(a.proxy(function () { this.paused || this.next() }, this), this.options.duration)); return this }, destroy: function (c) { a(d).off("resize.backstretch orientationchange.backstretch"); clearInterval(this.interval); c || this.$wrap.remove(); this.$container.removeData("backstretch") } }; var l, f = navigator.userAgent, m = navigator.platform, e = f.match(/AppleWebKit\/([0-9]+)/), e = !!e && e[1], h = f.match(/Fennec\/([0-9]+)/), h = !!h && h[1], n = f.match(/Opera Mobi\/([0-9]+)/), t = !!n && n[1], k = f.match(/MSIE ([0-9]+)/), k = !!k && k[1]; l = !((-1 < m.indexOf("iPhone") || -1 < m.indexOf("iPad") || -1 < m.indexOf("iPod")) && e && 534 > e || d.operamini && "[object OperaMini]" === {}.toString.call(d.operamini) || n && 7458 > t || -1 < f.indexOf("Android") && e && 533 > e || h && 6 > h || "palmGetResource" in d && e && 534 > e || -1 < f.indexOf("MeeGo") && -1 < f.indexOf("NokiaBrowser/8.5.0") || k && 6 >= k) })(jQuery, window);
+  </script>
 
 </body>
 
