@@ -17,7 +17,7 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Subscribe Eytaye on YouTube!'
+    message: 'Subscribe Eytaye on YouTube! Enjoy'
   })
 })
 
