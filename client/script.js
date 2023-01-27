@@ -1,5 +1,5 @@
-import bot from '/assets/bot.svg'
-import user from '/assets/user.svg'
+import bot from '/assets/ChatGPT-Icon.png'
+import user from '/assets/user.png'
 
 const form = document.querySelector('form')
 const chatContainer = document.querySelector('#chat_container')
@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
     loader(messageDiv)
 
     //fetch the data from the server
-    const response = await fetch('http://localhost:5000', {
+    const response = await fetch('https://chatgpt-ethiopia.onrender.com', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
